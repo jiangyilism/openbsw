@@ -208,6 +208,7 @@ SECTIONS
   {
     . = ALIGN(4);
     __DATA_RAM = .;
+    __DATA_ROM_START = .;
     __data_start__ = .;
     _sdata = .;
     *(.data)
@@ -216,18 +217,11 @@ SECTIONS
     . = ALIGN(4);
     __data_end__ = .;
     _edata = .;
+    __USED_FLASH_END = .;
   } > Data
 
   __DATA_END = __DATA_ROM + (__data_end__ - __data_start__);
    ___data_size = _edata - _sdata;
-  .data_rom : AT(__DATA_ROM)
-  {
-    __DATA_ROM_START = .;
-    . += ___data_size;
-    . = ALIGN(4);
-    __USED_FLASH_END = .;
-  }
-  > Application = 0xffffffff
 
   /* Uninitialized data */
 
@@ -244,10 +238,10 @@ SECTIONS
     __END_BSS = .;
   } > Data
 
-  _romp_at = __DATA_ROM + SIZEOF(.data);
-  .romp : AT(_romp_at)
+  .romp :
   {
-    __S_romp = _romp_at;
+    . = ALIGN(4);
+    __S_romp = .;
     LONG(__DATA_ROM);
     LONG(_sdata);
     LONG(___data_size);
@@ -255,7 +249,7 @@ SECTIONS
     LONG(0);
     LONG(0);
   } > Data
-  
+
   /* Heap */
 
   .heap :
