@@ -24,11 +24,11 @@ public:
     bool getFlEdge() const { return static_cast<bool>(edge_neg); }
 
 private:
-    uint32_t state      : 1;
-    uint32_t edge_neg   : 1;
-    uint32_t edge_pos   : 1;
-    uint32_t status_old : 1;
-    uint32_t reser      : 12;
+    uint32_t state                  : 1;
+    uint32_t edge_neg               : 1;
+    uint32_t edge_pos               : 1;
+    uint32_t status_old             : 1;
+    [[maybe_unused]] uint32_t reser : 12;
     uint16_t debounced;
 };
 
