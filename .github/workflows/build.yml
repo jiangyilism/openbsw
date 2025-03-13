@@ -21,7 +21,7 @@ jobs:
           path: |
             cmake-build-posix
             cmake-build-s32k148
-          key: ${{ runner.os }}-cmake-${{ matrix.platform }}-${{ matrix.cpp-standard }}-${{ hashFiles('**/*.cpp', '**/*.h',  '**/*.cmake', '**/*.txt', '**/*.c', '**/*.s', 'admin/cmake/ArmNoneEabi.cmake') }}
+          key: ${{ runner.os }}-cmake-${{ matrix.platform }}-${{ matrix.cpp-standard }}-${{ hashFiles('**/*.cpp', '**/*.h',  '**/*.cmake', '**/*.txt', '**/*.c', '**/*.s', 'admin/cmake/ArmNoneEabi*.cmake') }}
           restore-keys: |
             ${{ runner.os }}-cmake-${{ matrix.platform }}-${{ matrix.cpp-standard }}-
 
@@ -61,7 +61,7 @@ jobs:
           -S executables/referenceApp \
           -DCMAKE_CXX_STANDARD=${{ matrix.cpp-standard }} \
           -DBUILD_TARGET_PLATFORM="S32K148EVB" \
-          --toolchain ../../admin/cmake/ArmNoneEabi.cmake
+          --toolchain ../../admin/cmake/ArmNoneEabi-gcc.cmake
 
       - name: Build for ${{ matrix.platform }}
         if: steps.cache-cmake.outputs.cache-hit != 'true'
